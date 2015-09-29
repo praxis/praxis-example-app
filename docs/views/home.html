@@ -1,0 +1,70 @@
+<div class="page-header">
+  <h1>Blogger Example API</h1>
+</div>
+
+<p>
+Blogger is a simple API that allows simple management of Blogs, Posts and their Authors.
+</p>
+
+<p>
+While originally inspired by the <a href="https://developers.google.com/blogger">Google Blogger API</a>, it is only meant to be a simple (and nowhere near feature-complete) example of a Praxis application,
+simply to demonstrate some of the various available features of the framework.
+</p>
+
+<h2>Authentication</h2>
+
+There is currently no authentication mechanism for using this API.
+
+<h2>Using the API</h2>
+
+<p>
+Currently, the Blogger API only offers a 1.0 version, exposed as a path prefix.
+</p>
+
+<p>
+You can issue requests directly against the Blogger API with your favorite HTTP tool. This is an example of <code>show</code> request
+for the "default" view of a Blog (assuming you have the app running on port 9292 of localhost):
+</p>
+
+Request using Curl:
+<pre><code>curl -X GET https://localhost:9292:/api/v1.0/blogs/1</code></pre>
+
+Response from the API:
+<pre><code>
+ HTTP/1.1 200 OK
+ Content-Type: application/vnd.bloggy.blog
+ Content-Length: 581
+ Server: WEBrick/1.3.1 (Ruby/2.1.5/2014-11-13)
+ Date: Fri, 18 Sep 2015 23:25:46 GMT
+ Connection: Keep-Alive
+
+{
+  "id": 1,
+  "href": "/api/v1.0/blogs/1",
+  "name": "antonomastically",
+  "description": "Johnsonese",
+  "url": "example.com/blogs/",
+  "timestamps": {
+    "created_at": "2013-12-28T00:00:00+00:00",
+    "updated_at": "2013-06-04T00:00:00+00:00"
+  },
+  "owner": {
+    "id": 1,
+    "href": "/api/v1.0/users/1",
+    "first": "Joel",
+    "last": "Green",
+    "links": {
+      "posts": {
+        "href": "/api/v1.0/users/1/posts"
+      }
+    }
+  },
+  "links": {
+    "posts": {
+      "href": "/api/v1.0/blogs/1/posts"
+    },
+    "owner": {
+      "href": "/api/v1.0/users/1"
+    }
+  }
+</code></pre>
