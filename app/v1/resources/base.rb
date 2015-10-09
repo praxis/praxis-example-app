@@ -5,6 +5,8 @@ module V1
         V1::ResourceDefinitions.const_get(model.name.pluralize).to_href(id: self.id)
       end
 
+      property :href, dependencies: [:id]
+      
       def timestamps
         @timestamps ||= begin
           return {} if record.timestamps.nil?

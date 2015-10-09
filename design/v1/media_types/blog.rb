@@ -4,6 +4,8 @@ module V1
       identifier 'application/vnd.bloggy.blog'
       description "A Bloggy Blog"
 
+      domain_model 'V1::Resources::Blog'
+
       attributes do
         attribute :id, Integer,
           description: 'Unique identifier'
@@ -50,9 +52,16 @@ module V1
         attribute :url
         attribute :timestamps
 
-        attribute :owner
+        attribute :owner, view: :overview
         attribute :links
       end
+
+      view :overview do
+        attribute :id
+        attribute :href
+        attribute :name
+      end
+
 
       view :link do
         attribute :href
@@ -62,10 +71,12 @@ module V1
         attributes do
           attribute :href, String,
             description: 'API href for collection'
+          attribute :count, Integer
         end
 
         view :link do
           attribute :href
+          attribute :count
         end
       end
     end

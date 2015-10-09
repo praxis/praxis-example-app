@@ -5,18 +5,14 @@ module V1
   module Controllers
     class Posts
       include Base
+      include Praxis::Extensions::Rendering
 
       implements ResourceDefinitions::Posts
 
       def index(*args)
-        response.headers['Content-Type'] = self.content_type + ";type=collection"
-        posts = Post.all.collect do |post|
-          post_resource = V1::Resources::Post.new(post)
-          post_mt = V1::MediaTypes::Post.new(post_resource)
-          post_mt.render(view: :default)
-        end
+        posts = Post.all
 
-        JSON.pretty_generate(posts)
+        display(posts)
       end
 
 
@@ -26,18 +22,12 @@ module V1
           return ResourceNotFound.new(id: id, type: Post)
         end
 
-        response.headers['Content-Type'] = self.content_type
-
-        post_resource = V1::Resources::Post.new(post)
-        post_mt = V1::MediaTypes::Post.new(post_resource)
-
-        JSON.pretty_generate(post_mt.render(view: :default))
+        display(post)
       end
 
 
       def create(blog_id: nil, **args)
         post_data = request.payload.part 'post'
-
 
         post = ::Post.create(
            title: post_data.body.title,

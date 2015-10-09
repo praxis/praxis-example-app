@@ -2,8 +2,9 @@ module V1
   module MediaTypes
     class Post < Praxis::MediaType
       identifier 'application/vnd.bloggy.post'
-
       description 'A Post in Bloggy'
+
+      domain_model 'V1::Resources::Post'
 
       attributes do
         attribute :id, Integer,
@@ -49,6 +50,12 @@ module V1
         attribute :links
       end
 
+      view :overview do
+        attribute :id
+        attribute :href
+        attribute :title
+      end
+
       view :link do
         attribute :href
       end
@@ -62,6 +69,7 @@ module V1
 
         view :link do
           attribute :href
+          attribute :count
         end
       end
     end

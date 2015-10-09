@@ -25,6 +25,8 @@ describe 'models' do
         post_resource = V1::Resources::Post.new(post)
         post_mt = V1::MediaTypes::Post.new(post_resource)
 
+        #binding.pry
+
         expect(post_mt.validate).to be_empty
       end
 

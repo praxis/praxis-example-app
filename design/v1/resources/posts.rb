@@ -15,6 +15,13 @@ EOS
       action :index do
         description 'Retrieve a listing of all posts.'
         routing { get '' }
+        params do
+          attribute :view, Symbol,
+            description: "View name with which to render the Posts. If no view " +
+              "fields params are passed, Posts will be rendered with the 'default' view."
+          attribute :fields, Praxis::Extensions::FieldSelection::FieldSelector.for(MediaTypes::Post),
+            description: "Fields with which to render the Posts."
+        end
         response :ok, media_type: Praxis::Collection.of(MediaTypes::Post)
       end
 
@@ -23,6 +30,11 @@ EOS
         routing { get '/:id' }
         params do
           attribute :id, required: true
+          attribute :view, Symbol,
+            description: "View name with which to render the Post. If no view " +
+              "fields params are passed, Post will be rendered with the 'default' view."
+          attribute :fields, Praxis::Extensions::FieldSelection::FieldSelector.for(MediaTypes::Post),
+            description: "Fields with which to render the Post."
         end
         response :ok
         response :resource_not_found

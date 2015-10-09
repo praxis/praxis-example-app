@@ -13,9 +13,18 @@ The API allows retrieving the list of existing blogs, getting the
 details of a single one, as well as their creation and deletion.
 EOS
 
+
+
       action :index do
         description 'Retrieve a listing of blogs.'
         routing { get '' }
+        params do
+          attribute :view, Symbol,
+            description: "View name with which to render the Blogs. If no view " +
+              "fields params are passed, Blogs will be rendered with the 'default' view."
+          attribute :fields, Praxis::Extensions::FieldSelection::FieldSelector.for(MediaTypes::Blog),
+            description: "Fields with which to render the Blogs."
+        end
         response :ok, media_type: Praxis::Collection.of(MediaTypes::Blog)
       end
 
@@ -25,6 +34,11 @@ EOS
 
         params do
           attribute :id
+          attribute :view, Symbol,
+            description: "View name with which to render the Blog. If no view " +
+              "fields params are passed, Blog will be rendered with the 'default' view."
+          attribute :fields, Praxis::Extensions::FieldSelection::FieldSelector.for(MediaTypes::Blog),
+            description: "Fields with which to render the Blog."
         end
 
         response :ok

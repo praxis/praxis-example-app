@@ -4,6 +4,8 @@ class DatabaseHelper
     DB.create_table! :users do
       primary_key :id
 
+      Integer :primary_blog_id
+
       String :first
       String :last
 
