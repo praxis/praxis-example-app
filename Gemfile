@@ -26,4 +26,6 @@ group :development do
   gem 'rspec-collection_matchers'
 
   gem 'fuubar'
+
+  gem 'coveralls'
 end

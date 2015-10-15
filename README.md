@@ -1,5 +1,8 @@
 # Bloggy Example Praxis Application
 
+[![Build Status](https://travis-ci.org/rightscale/praxis-example-app.svg?branch=master)](https://travis-ci.org/rightscale/praxis-example-app)
+[![Coverage Status](https://coveralls.io/repos/rightscale/praxis-example-app/badge.svg?branch=master&service=github)](https://coveralls.io/github/rightscale/praxis-example-app?branch=master)
+
 Bloggy is a simple (and nowhere near feature-complete) example of a Praxis application. It's designed to demonstrate a various features of Praxis and show the overall structure of a full application.
 
 See the [Getting Started](http://praxis-framework.io/getting-started/) guide on the Praxis website for more information about the structure of a Praxis application.
