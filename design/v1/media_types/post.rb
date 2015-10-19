@@ -62,6 +62,7 @@ module V1
 
 
       class CollectionSummary < Praxis::MediaType
+        display_name 'PostCollectionSummary'
         attributes do
           attribute :href, String
           attribute :count, Integer

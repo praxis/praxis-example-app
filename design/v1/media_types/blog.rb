@@ -68,6 +68,7 @@ module V1
       end
 
       class CollectionSummary < Praxis::MediaType
+        display_name 'BlogCollectionSummary'
         attributes do
           attribute :href, String,
             description: 'API href for collection'
