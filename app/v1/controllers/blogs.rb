@@ -21,6 +21,7 @@ module V1
         blog_records = identity_map.load(Blog)
         identity_map.finalize!
 
+        
         display(blog_records)
       end
 

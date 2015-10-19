@@ -79,6 +79,10 @@ module V1
           attribute :href
           attribute :count
         end
+
+        view :default do
+          attribute :href
+        end
       end
     end
 

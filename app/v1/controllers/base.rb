@@ -14,8 +14,11 @@ module V1
           end
         end
       end
-
-
     end
+
+    def default_encoder
+      'json'.freeze
+    end
+
   end
 end
