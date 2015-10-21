@@ -35,7 +35,7 @@ class DatabaseHelper
       String :url
 
       String :timestamps
-
+      String :tags
     end
   end
 

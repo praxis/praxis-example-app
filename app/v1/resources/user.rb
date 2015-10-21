@@ -7,6 +7,7 @@ module V1
 
       property :posts_summary, dependencies: [:href, :posts]
       property :blogs_summary, dependencies: [:href, :blogs]
+      property :recent_posts, through: [:posts], dependencies: ['posts.timestamps']
 
       def posts_summary
         {
