@@ -5,11 +5,16 @@ module V1
     class Blog < Base
       model ::Blog
 
+      property :recent_posts, through: :posts,  dependencies: ['posts.timestamps']
+      property :posts_summary, dependencies: [:href, :posts]
+
       def recent_posts
         @recent_posts ||= posts.sort do |a,b|
           a.timestamps[:created_at] <=> b.timestamps[:created_at]
         end[0..4]
+
       end
+
 
       def posts_summary
         {

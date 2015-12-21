@@ -22,8 +22,9 @@ module FactoryGirl
         end
 
         example = Proc.new do
-          val = attribute.example([attributor_context, name], parent: self)
-          attribute.dump(val)
+          ctx = [attributor_context, name]
+          val = attribute.example(ctx, parent: self)
+          attribute.dump(val, context: ctx )
         end
 
         block = Proc.new do

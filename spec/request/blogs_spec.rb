@@ -16,12 +16,67 @@ describe V1::Controllers::Blogs do
     its(:status){ should be(200) }
 
     it 'returns the correct content type' do
-      expect(response.headers['Content-Type']).to eq 'application/vnd.bloggy.blog;type=collection'
+      expect(response.headers['Content-Type']).to eq 'application/vnd.bloggy.blog; type=collection'
     end
+
 
     it 'returns 3 JSON encoded items' do
       parsed = JSON.parse(response.body)
       expect(parsed).to have(3).items
+
+      expected_keys = ["id", "href", "name", "description", "url", "timestamps", "owner", "links"]
+      parsed.each do |blog|
+        record = blog_records.find { |b| b.id == blog['id'] }
+        expect(record).to_not be(nil)
+        expect(blog.keys).to match_array(expected_keys)
+      end
+    end
+
+    context 'with only fields' do
+      before do
+        get '/api/v1.0/blogs', {fields: 'id,name,url'}
+      end
+
+      it 'retrieves only the fields specified' do
+        parsed = JSON.parse(response.body)
+        expect(parsed).to have(3).items
+        parsed.each do |blog|
+          expect(blog.keys).to match_array(['id', 'name', 'url'])
+        end
+      end
+    end
+
+    context 'with only a view' do
+      before do
+        get '/api/v1.0/blogs', {view: 'overview'}
+      end
+
+      it 'retrieves the view specified' do
+        parsed = JSON.parse(response.body)
+        expect(parsed).to have(3).items
+        parsed.each do |blog|
+          expect(blog.keys).to match_array(['id', 'name', 'href'])
+        end
+      end
+    end
+
+    context 'with both a view and fields specified' do
+      let(:fields) { ['id','timestamps','owner'] }
+      let(:user_overview_fields) { V1::MediaTypes::User.views[:overview].contents.keys.collect(&:to_s) }
+
+      before do
+        get '/api/v1.0/blogs', {view: 'default', fields: fields.join(',') }
+      end
+
+      it 'retrieves the subset of fields from the view' do
+        parsed = JSON.parse(response.body)
+        expect(parsed).to have(3).items
+        parsed.each do |blog|
+          expect(blog.keys).to match_array(fields)
+
+          expect(blog['owner'].keys).to match_array(user_overview_fields)
+        end
+      end
     end
   end
 

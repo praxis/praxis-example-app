@@ -1,6 +1,10 @@
 source "https://rubygems.org"
 
 gem 'praxis'
+gem 'praxis-blueprints'
+gem 'praxis-mapper'
+gem 'attributor'
+
 gem 'newrelic-praxis'
 
 gem 'rake'
@@ -13,6 +17,7 @@ gem 'nokogiri'
 gem 'builder'
 
 gem 'factory_girl'
+gem 'parslet'
 
 group :development do
   gem 'guard'

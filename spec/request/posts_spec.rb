@@ -14,7 +14,7 @@ describe V1::Controllers::Posts do
     its(:status) { should eq(200) }
 
     it 'returns the correct content type' do
-      expect(response.headers['Content-Type']).to eq 'application/vnd.bloggy.post;type=collection'
+      expect(response.headers['Content-Type']).to eq 'application/vnd.bloggy.post; type=collection'
     end
 
     it 'returns 3 JSON encoded items' do

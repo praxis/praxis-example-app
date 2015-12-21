@@ -1,7 +1,7 @@
 FactoryGirl.define do
   to_create { |i| i.save }
 
-  factory :blog, class: Blog do
+  factory :blog, class: Blog, aliases: [:primary_blog] do
     traits_for! V1::MediaTypes::Blog
 
     name
@@ -37,6 +37,16 @@ FactoryGirl.define do
 
     first
     last
+    timestamps
+
+
+    trait :with_primary_blog do
+      after :create do |user, evaluator|
+        blog = create :blog, owner: user
+        user.primary_blog = blog
+        user.save
+      end
+    end
 
     trait :with_posts do
       transient { post_count 5 }

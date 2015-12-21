@@ -1,7 +1,16 @@
+require 'praxis/extensions/field_selection'
+require 'praxis/plugins/praxis_mapper_plugin'
+
 Praxis::Application.configure do |application|
 
   # Use Rack::ContentLength middleware
   application.middleware Rack::ContentLength
+
+  application.bootloader.use Praxis::Plugins::PraxisMapperPlugin,
+    config_data: {
+      repositories: {},
+      log_stats: ENV['RACK_ENV'] == 'test' ? 'skip' : 'detailed'
+    }
 
   # Use Praxis::Handlers::XML for 'xml'-type parsing/generating
   application.handler 'xml', Praxis::Handlers::XML

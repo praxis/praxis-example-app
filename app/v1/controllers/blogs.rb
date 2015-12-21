@@ -8,45 +8,35 @@ module V1
     class Blogs
       include Base
 
+      include Praxis::Extensions::MapperSelectors
+      include Praxis::Extensions::Rendering
+
       implements ResourceDefinitions::Blogs
 
-      def index(*args)
-        # this action returns a collection of resources, so ensure
-        # we set the Content-Type header appropriately
-        response.headers['Content-Type'] = self.content_type + ";type=collection"
-        blogs = identity_map.load(Blog) do
-          load :owner
-          track :posts
-        end
+      before actions: [:index, :show] do |controller|
+        controller.set_selectors
+      end
 
+      def index(*args)
+        blog_records = identity_map.load(Blog)
         identity_map.finalize!
 
-        blog_resources = V1::Resources::Blog.wrap(blogs)
-        rendered = blog_resources.collect do |blog_resource|
-          mt = MediaTypes::Blog.new(blog_resource)
-          mt.render(view: :default)
-        end
-
-        JSON.pretty_generate(rendered)
+        
+        display(blog_records)
       end
 
 
       def show(id:, **args)
         blog = identity_map.load(Blog) do
           where id: id
-          load :owner, :posts
         end.first
+        identity_map.finalize!
 
         if blog.nil?
           return ResourceNotFound.new(id: id, type: Blog)
         end
 
-        blog_resource = V1::Resources::Blog.wrap(blog)
-        media_type = MediaTypes::Blog.new(blog_resource)
-
-        response.headers['Content-Type'] = self.content_type
-
-        JSON.pretty_generate(media_type.render(view: :default))
+        display(blog)
       end
 
 

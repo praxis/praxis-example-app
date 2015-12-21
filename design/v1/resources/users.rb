@@ -10,14 +10,12 @@ Represents a user of the system. Users may own blogs and author posts.
 
 The API allows only retrieving information of users, either by listing them all
 or by retrieving details of a specific user.
-
-*Note:* currently unimplemented.
 EOS
 
       action :index do
         description 'Retrieve a listing of all users.'
         routing { get '' }
-        response :ok
+        response :ok, media_type: Praxis::Collection.of(MediaTypes::User)
       end
 
       action :show do
@@ -27,6 +25,7 @@ EOS
           attribute :id
         end
         response :ok
+        response :resource_not_found
       end
 
     end
