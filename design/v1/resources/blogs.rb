@@ -22,7 +22,7 @@ EOS
           attribute :view, Symbol,
             description: "View name with which to render the Blogs. If no view " +
               "fields params are passed, Blogs will be rendered with the 'default' view."
-          attribute :fields, Praxis::Extensions::FieldSelection::FieldSelector.for(MediaTypes::Blog),
+          attribute :fields, Praxis::Types::FieldSelector.for(MediaTypes::Blog),
             description: "Fields with which to render the Blogs."
         end
         response :ok, media_type: Praxis::Collection.of(MediaTypes::Blog)

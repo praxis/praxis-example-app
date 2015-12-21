@@ -1,9 +1,9 @@
 source "https://rubygems.org"
 
-gem 'praxis', path: "../praxis"
-gem 'praxis-blueprints', path: "../praxis-blueprints"
-gem 'praxis-mapper', path: '../praxis-mapper'
-gem 'attributor', path: '../attributor'
+gem 'praxis'
+gem 'praxis-blueprints'
+gem 'praxis-mapper'
+gem 'attributor'
 
 gem 'newrelic-praxis'
 
